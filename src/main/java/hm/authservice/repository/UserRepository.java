@@ -14,9 +14,9 @@ public class UserRepository {
 
     private List<Users> listUsers = new ArrayList<>(Stream.of(new Users("Amir", "key"), new Users("Vova", "keys")).collect(Collectors.toList()));
 
-    public List<Authorities> getUserAuthorities(String user, String password) {
+    public List<Authorities> getUserAuthorities(Users users) {
         for (Users listUser : listUsers) {
-            if (listUser.getUser().equals(user) & listUser.getPassword().equals(password)) {
+            if (listUser.equals(users)) {
                 return List.of(Authorities.READ);
             }
         }

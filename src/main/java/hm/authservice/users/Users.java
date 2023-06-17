@@ -1,9 +1,16 @@
 package hm.authservice.users;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.Objects;
 
 public class Users {
+    @NotBlank
+    @Size(min=2, max = 30)
     private String user;
+    @NotBlank
+    @Size(min=3, max=30)
     private String password;
 
     public Users(String user, String password) {

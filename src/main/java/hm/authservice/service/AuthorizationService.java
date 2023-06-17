@@ -1,9 +1,11 @@
 package hm.authservice.service;
 
+import hm.authservice.annotations.AppAnnotation;
 import hm.authservice.authorities.Authorities;
 import hm.authservice.exception.InvalidCredentials;
 import hm.authservice.exception.UnauthorizedUser;
 import hm.authservice.repository.UserRepository;
+import hm.authservice.users.Users;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +14,14 @@ import java.util.List;
 public class AuthorizationService {
     UserRepository userRepository = new UserRepository();
 
-    public List<Authorities> getAuthorities(String user, String password) {
+    public List<Authorities> getAuthorities(Users users) {
 
-        if (isEmpty(user) || isEmpty(password)) {
+        if (isEmpty(users.getUser()) || isEmpty(users.getPassword())) {
             throw new InvalidCredentials("User name or password is empty");
         }
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(users);
         if (isEmpty(userAuthorities)) {
-            throw new UnauthorizedUser("Unknown user " + user);
+            throw new UnauthorizedUser("Unknown user " + users.getUser());
         }
         return userAuthorities;
 

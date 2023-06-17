@@ -1,10 +1,12 @@
 package hm.authservice.exception;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Objects;
 
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
@@ -21,9 +23,8 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(401));
     }
 
-    @ExceptionHandler (RuntimeException.class)
-    public ResponseEntity<String> authHandlerRuntimeException (RuntimeException e) {
-        System.out.println(e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.I_AM_A_TEAPOT);
+    @ExceptionHandler (MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> authHandlerMethodArgumentNotValidException (MethodArgumentNotValidException e) {
+        return new ResponseEntity<>(Objects.requireNonNull(e.getDetailMessageArguments())[1], HttpStatusCode.valueOf(415));
     }
 }
