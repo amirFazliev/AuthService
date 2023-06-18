@@ -10,7 +10,12 @@ import java.util.List;
 
 @Service
 public class AuthorizationService {
-    UserRepository userRepository = new UserRepository();
+    private final UserRepository userRepository;
+
+    public AuthorizationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
     public List<Authorities> getAuthorities(String user, String password) {
 

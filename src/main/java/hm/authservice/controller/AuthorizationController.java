@@ -1,8 +1,6 @@
 package hm.authservice.controller;
 
 import hm.authservice.authorities.Authorities;
-import hm.authservice.exception.InvalidCredentials;
-import hm.authservice.exception.UnauthorizedUser;
 import hm.authservice.service.AuthorizationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,18 +10,14 @@ import java.util.List;
 
 @RestController
 public class AuthorizationController {
-    AuthorizationService service = new AuthorizationService() ;
+    private final AuthorizationService service;
+
+    public AuthorizationController(AuthorizationService service) {
+        this.service = service;
+    }
 
     @GetMapping("/authorize")
     public List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
-        try {
-            return service.getAuthorities(user, password);
-        } catch (InvalidCredentials e) {
-            throw new InvalidCredentials(e.getMessage());
-        } catch (UnauthorizedUser e) {
-            throw new UnauthorizedUser(e.getMessage());
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Error - ошибка");
-        }
+        return service.getAuthorities(user, password);
     }
 }
