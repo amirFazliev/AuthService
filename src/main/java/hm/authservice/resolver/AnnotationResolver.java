@@ -1,6 +1,7 @@
 package hm.authservice.resolver;
 
 import hm.authservice.annotations.AppAnnotation;
+import hm.authservice.users.Users;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -17,16 +18,9 @@ public class AnnotationResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        String[] values = webRequest.getParameterValues(parameter.getParameterAnnotation(AppAnnotation.class).value());
-        if (values == null) {
-            return null;
-        }
-        String[] parts = values[0].split(",");
-        if (parts.length==1) {
-            return new Object[]{parts[0]};
-        } else if (parts.length==2) {
-            return new Object[]{parts[0], parts[1]};
-        }
-        return null;
+
+        String user = webRequest.getParameter("userParam");
+        String password = webRequest.getParameter("passwordParam");
+        return new Users(user, password);
     }
 }

@@ -1,6 +1,5 @@
 package hm.authservice.service;
 
-import hm.authservice.annotations.AppAnnotation;
 import hm.authservice.authorities.Authorities;
 import hm.authservice.exception.InvalidCredentials;
 import hm.authservice.exception.UnauthorizedUser;

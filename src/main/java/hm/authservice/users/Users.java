@@ -56,4 +56,11 @@ public class Users {
         return "user = " + user +
                 ", password = " + password;
     }
+
+    public static String[] convert(Users users) {
+        String[] result = new String[2];
+        result[0] = users.getUser();
+        result[1] = users.getPassword();
+        return result;
+    }
 }
