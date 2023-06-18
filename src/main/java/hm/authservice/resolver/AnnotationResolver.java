@@ -22,6 +22,11 @@ public class AnnotationResolver implements HandlerMethodArgumentResolver {
             return null;
         }
         String[] parts = values[0].split(",");
-        return new Object[]{parts[0], parts[1]};
+        if (parts.length==1) {
+            return new Object[]{parts[0]};
+        } else if (parts.length==2) {
+            return new Object[]{parts[0], parts[1]};
+        }
+        return null;
     }
 }

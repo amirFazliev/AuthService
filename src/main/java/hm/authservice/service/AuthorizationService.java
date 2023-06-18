@@ -6,13 +6,19 @@ import hm.authservice.exception.InvalidCredentials;
 import hm.authservice.exception.UnauthorizedUser;
 import hm.authservice.repository.UserRepository;
 import hm.authservice.users.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class AuthorizationService {
-    UserRepository userRepository = new UserRepository();
+    @Autowired
+    private final UserRepository userRepository;
+
+    public AuthorizationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<Authorities> getAuthorities(Users users) {
 
